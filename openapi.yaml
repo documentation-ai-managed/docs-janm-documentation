@@ -1,0 +1,205 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: Janm Documentation API
+  license:
+    name: MIT
+servers:
+  - url: https://api.janm.com/v1
+paths:
+  /projects:
+    get:
+      summary: List all projects
+      operationId: listProjects
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: An paged array of projects
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Projects'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a project
+      operationId: createProjects
+      responses:
+        201:
+          description: Project created successfully
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /projects/{projectId}:
+    get:
+      summary: Info for a specific project
+      operationId: showProjectById
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: The id of the project to retrieve
+          schema:
+            type: string
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Projects'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /docs:
+    get:
+      summary: Retrieve all documents across projects
+      operationId: listDocs
+      parameters:
+        - name: project_id
+          in: query
+          description: Filter documents by project ID
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of documents with metadata including titles, authors, and last modified dates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Docs'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a new document
+      operationId: createDoc
+      responses:
+        201:
+          description: Document created successfully with assigned ID and initial metadata
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /webhooks:
+    get:
+      summary: List configured webhooks
+      operationId: listWebhooks
+      responses:
+        200:
+          description: Array of webhook configurations including URLs, events, and status information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhooks'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Register a new webhook
+      operationId: createWebhook
+      responses:
+        201:
+          description: Webhook registered successfully with unique identifier for management
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Project:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+    Projects:
+      type: array
+      items:
+        $ref: '#/components/schemas/Project'
+    Doc:
+      required:
+        - id
+        - title
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        content:
+          type: string
+        project_id:
+          type: integer
+          format: int64
+    Docs:
+      type: array
+      items:
+        $ref: '#/components/schemas/Doc'
+    Webhook:
+      required:
+        - id
+        - url
+      properties:
+        id:
+          type: integer
+          format: int64
+        url:
+          type: string
+        events:
+          type: array
+          items:
+            type: string
+    Webhooks:
+      type: array
+      items:
+        $ref: '#/components/schemas/Webhook'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

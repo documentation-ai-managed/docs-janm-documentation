@@ -1,0 +1,142 @@
+---
+title: Core Concepts
+description: Fundamental concepts and principles of Janm Documentation
+---
+
+## Understanding Projects
+
+Projects in Janm Documentation serve as the foundational container for all your documentation efforts. Each project represents a distinct initiative, product, or knowledge domain, allowing you to organize content logically and maintain clear boundaries between different areas of work.
+
+<Columns cols={2}>
+  <Card title="Project Structure" icon="folder" href="#structure">
+    Learn how projects are organized and how to create hierarchical documentation structures.
+  </Card>
+  <Card title="Access Control" icon="shield" href="#access">
+    Understand permission levels and how to manage team access within projects.
+  </Card>
+</Columns>
+
+## Documentation Types
+
+Janm supports various documentation formats to accommodate different needs and audiences. From technical API references to user-facing guides, our platform adapts to your content requirements.
+
+<Tabs>
+  <Tab title="API Docs" icon="code">
+    Technical documentation for developers, including endpoint specifications, authentication methods, and code examples.
+
+    <CodeGroup tabs="curl,JavaScript">
+      ```bash
+curl -X GET "https://api.janm.com/v1/projects" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+      ```javascript
+fetch('https://api.janm.com/v1/projects', {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data));
+```
+    </CodeGroup>
+  </Tab>
+  <Tab title="User Guides" icon="book-open">
+    Step-by-step instructions and tutorials designed for end users, focusing on practical application and problem-solving.
+
+    <Steps>
+      <Step title="Navigate to Dashboard" icon="home">
+        Log in to your Janm account and access the main dashboard.
+      </Step>
+      <Step title="Create New Document" icon="plus">
+        Click the "New Document" button and select your desired template.
+      </Step>
+      <Step title="Add Content" icon="edit">
+        Use the rich text editor to add headings, text, images, and formatting.
+      </Step>
+      <Step title="Save and Publish" icon="check">
+        Save your work and publish it to make it available to your audience.
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Knowledge Base" icon="database">
+    Comprehensive reference materials and FAQs that serve as a central repository of information for your organization.
+
+    <Expandable title="Knowledge Base Features" default-open="false">
+      - Searchable content with advanced filters
+      - Categorized articles and topics
+      - User feedback and rating system
+      - Integration with help desk systems
+    </Expandable>
+  </Tab>
+</Tabs>
+
+## Version Management
+
+Effective documentation requires careful version control to track changes, maintain accuracy, and provide access to historical information. Janm's versioning system ensures you can always reference past states while keeping current documentation up-to-date.
+
+<Callout kind="info">Version management helps prevent confusion when multiple team members are working on documentation simultaneously.</Callout>
+
+<Steps>
+  <Step title="Enable Versioning" icon="toggle-left">
+    In your project settings, toggle on version control to start tracking changes.
+  </Step>
+  <Step title="Create Snapshots" icon="camera">
+    Take snapshots at key milestones to preserve important versions of your documentation.
+  </Step>
+  <Step title="Compare Versions" icon="git-compare">
+    Use the diff view to see exactly what changed between versions.
+  </Step>
+  <Step title="Restore Previous" icon="rotate-ccw">
+    If needed, restore a previous version as the current state.
+  </Step>
+</Steps>
+
+## Collaboration Workflows
+
+Janm Documentation facilitates seamless collaboration through real-time editing, commenting, and approval processes. These features ensure that documentation remains accurate and reflects the collective knowledge of your team.
+
+<ExpandableGroup>
+  <Expandable title="Real-time Editing" default-open="true">
+    Multiple users can edit the same document simultaneously, with changes appearing instantly for all collaborators. This eliminates version conflicts and streamlines the editing process.
+  </Expandable>
+  <Expandable title="Comment and Review" default-open="false">
+    Add comments to specific sections, suggest changes, and create review workflows to ensure quality control before publishing.
+  </Expandable>
+  <Expandable title="Approval Processes" default-open="false">
+    Set up multi-step approval workflows for critical documentation, ensuring that changes are reviewed by subject matter experts before going live.
+  </Expandable>
+</ExpandableGroup>
+
+## Integration Ecosystem
+
+Janm Documentation integrates with popular development and productivity tools to create a seamless workflow. These integrations automate processes and keep your documentation synchronized with your broader toolchain.
+
+| Integration Type | Purpose | Popular Tools |
+|------------------|---------|---------------|
+| Version Control | Sync documentation with code changes | GitHub, GitLab, Bitbucket |
+| Communication | Notify teams about documentation updates | Slack, Microsoft Teams |
+| Project Management | Link documentation to project tasks | Jira, Trello, Asana |
+| CI/CD | Automate documentation deployment | Jenkins, GitHub Actions |
+
+<Callout kind="tip">Start with the integrations that align with your existing workflow to maximize the value of Janm Documentation.</Callout>
+
+## Best Practices
+
+Following established best practices ensures your documentation remains valuable, accessible, and maintainable over time. These guidelines help create documentation that serves its intended purpose effectively.
+
+<Steps>
+  <Step title="Define Your Audience" icon="users">
+    Clearly identify who will use your documentation and tailor content to their needs and knowledge level.
+  </Step>
+  <Step title="Maintain Consistency" icon="check-circle">
+    Use consistent terminology, formatting, and structure across all documentation to improve readability.
+  </Step>
+  <Step title="Regular Updates" icon="refresh-cw">
+    Schedule regular reviews and updates to keep documentation current and accurate.
+  </Step>
+  <Step title="Gather Feedback" icon="message-circle">
+    Implement mechanisms to collect user feedback and incorporate it into documentation improvements.
+  </Step>
+</Steps>
+
+By understanding these core concepts, you'll be well-equipped to leverage Janm Documentation effectively in your projects. Remember that good documentation is an ongoing process that evolves with your products and team needs.

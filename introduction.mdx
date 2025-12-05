@@ -1,0 +1,97 @@
+---
+title: Introduction
+description: Overview of Janm Documentation and its core capabilities
+---
+
+## Getting Started
+
+Janm Documentation provides a centralized space to organize and manage all your project documentation. Streamline your workflow with powerful tools for creating, editing, and sharing comprehensive docs. Get started quickly with our intuitive interface and robust features.
+
+<Columns cols={3}>
+  <Card title="Easy Organization" icon="folder" href="#organization">
+    Organize your documentation with intuitive folders and categories. Keep everything structured and accessible.
+  </Card>
+  <Card title="Collaborative Editing" icon="users" href="#collaboration">
+    Work together in real-time with team members. Share feedback and iterate on documentation seamlessly.
+  </Card>
+  <Card title="Powerful Search" icon="search" href="#search">
+    Find any document instantly with advanced search capabilities. Never lose track of your information.
+  </Card>
+</Columns>
+
+## Key Features
+
+Janm Documentation offers a comprehensive suite of tools designed to enhance your documentation workflow. From version control to integration capabilities, every feature is built to improve productivity and collaboration.
+
+<Tabs>
+  <Tab title="Version Control" icon="git-branch">
+    Track changes over time with built-in version control. Compare revisions and maintain a complete history of your documentation updates.
+
+    <Callout kind="tip">Always commit changes with descriptive messages to maintain clear documentation history.</Callout>
+  </Tab>
+  <Tab title="Integrations" icon="plug">
+    Connect with popular tools like GitHub, Slack, and more. Automate workflows and keep your documentation in sync with your development process.
+
+    <CodeGroup tabs="JavaScript,Python">
+      ```javascript
+const integration = {
+  type: 'github',
+  token: process.env.GITHUB_TOKEN,
+  repo: 'my-org/my-repo'
+};
+```
+      ```python
+import requests
+
+integration = {
+    'type': 'slack',
+    'webhook_url': 'https://hooks.slack.com/...',
+    'channel': '#docs'
+}
+```
+    </CodeGroup>
+  </Tab>
+  <Tab title="Templates" icon="file-text">
+    Use pre-built templates to get started quickly. Customize layouts for different types of documentation, from API guides to user manuals.
+
+    <Expandable title="Available Templates" default-open="false">
+      - API Documentation Template
+      - User Guide Template
+      - Release Notes Template
+      - Troubleshooting Guide Template
+    </Expandable>
+  </Tab>
+</Tabs>
+
+<Steps>
+  <Step title="Sign Up" icon="user-plus">
+    Create your free account at janm.com to get started with documentation management.
+  </Step>
+  <Step title="Create Project" icon="folder-plus">
+    Set up your first project and invite team members to collaborate.
+  </Step>
+  <Step title="Import Docs" icon="upload">
+    Import existing documentation from various sources or start fresh with templates.
+  </Step>
+  <Step title="Customize" icon="settings">
+    Configure your workspace settings, permissions, and integrations.
+  </Step>
+  <Step title="Publish" icon="send">
+    Publish your documentation and share it with stakeholders.
+  </Step>
+</Steps>
+
+<ExpandableGroup>
+  <Expandable title="What makes Janm different?" default-open="true">
+    Unlike traditional documentation tools, Janm provides a unified platform that combines writing, collaboration, and publishing in one seamless experience. Our AI-powered features help you maintain consistent, up-to-date documentation without the hassle.
+  </Expandable>
+  <Expandable title="Is my data secure?" default-open="false">
+    Absolutely. We use enterprise-grade encryption and security measures to protect your documentation. All data is stored securely and access is controlled through granular permissions.
+  </Expandable>
+</ExpandableGroup>
+
+## Next Steps
+
+Now that you understand the basics of Janm Documentation, explore our core concepts to learn how to make the most of our platform. Whether you're documenting APIs, creating user guides, or managing knowledge bases, Janm has the tools you need to succeed.
+
+<Callout kind="info">Ready to dive deeper? Check out our core concepts guide to learn about advanced features and best practices.</Callout>

@@ -1,0 +1,241 @@
+---
+title: API Integration
+description: Integrating Janm Documentation with external systems and APIs
+---
+
+## API Overview
+
+Janm Documentation provides a comprehensive REST API that allows you to programmatically manage your documentation projects, automate workflows, and integrate with external systems. The API follows RESTful principles and uses JSON for data exchange.
+
+<Columns cols={3}>
+  <Card title="RESTful Design" icon="code" href="#restful">
+    Standard HTTP methods and resource-based URLs for intuitive API interactions.
+  </Card>
+  <Card title="JSON Responses" icon="database" href="#json">
+    Consistent JSON format for all API responses with clear error handling.
+  </Card>
+  <Card title="Rate Limiting" icon="clock" href="#rate-limiting">
+    Fair usage policies with clear rate limit headers and upgrade options.
+  </Card>
+</Columns>
+
+## Authentication
+
+Secure access to the Janm API requires proper authentication. We support multiple authentication methods to accommodate different use cases and security requirements.
+
+<Tabs>
+  <Tab title="Bearer Tokens" icon="key">
+    Use bearer tokens for API authentication in production environments.
+
+    <CodeGroup tabs="curl,Python">
+      ```bash
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+  https://api.janm.com/v1/projects
+```
+      ```python
+import requests
+
+headers = {'Authorization': f'Bearer {token}'}
+response = requests.get('https://api.janm.com/v1/projects', headers=headers)
+```
+    </CodeGroup>
+  </Tab>
+  <Tab title="API Keys" icon="lock">
+    API keys provide a simple authentication method for server-to-server communication.
+
+    <Steps>
+      <Step title="Generate API Key" icon="plus">
+        Navigate to your account settings and generate a new API key.
+      </Step>
+      <Step title="Include in Headers" icon="send">
+        Add the API key to the X-API-Key header in your requests.
+      </Step>
+      <Step title="Secure Storage" icon="shield">
+        Store API keys securely and rotate them regularly for security.
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="OAuth 2.0" icon="user-check">
+    OAuth 2.0 flows for user-authorized API access in web and mobile applications.
+
+    <Expandable title="Supported OAuth Flows" default-open="false">
+      - Authorization Code Grant
+      - Implicit Grant
+      - Client Credentials
+      - Refresh Token Flow
+    </Expandable>
+  </Tab>
+</Tabs>
+
+<Callout kind="info">Always use HTTPS when making API requests to ensure secure communication.</Callout>
+
+## Core Endpoints
+
+The Janm API provides endpoints for managing projects, documents, users, and integrations. Understanding these core resources will help you build effective integrations.
+
+<ExpandableGroup>
+  <Expandable title="Projects API" default-open="true">
+    Manage documentation projects programmatically. Create, update, and organize your project structure through the API.
+
+    <CodeGroup tabs="JavaScript,Go">
+      ```javascript
+// Create a new project
+const project = {
+  name: 'API Documentation',
+  description: 'Comprehensive API reference',
+  visibility: 'private'
+};
+
+fetch('https://api.janm.com/v1/projects', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+  body: JSON.stringify(project)
+});
+```
+      ```go
+project := map[string]interface{}{
+    "name": "API Documentation",
+    "description": "Comprehensive API reference",
+    "visibility": "private",
+}
+
+data, _ := json.Marshal(project)
+req, _ := http.NewRequest("POST", "https://api.janm.com/v1/projects", bytes.NewBuffer(data))
+req.Header.Set("Content-Type", "application/json")
+req.Header.Set("Authorization", "Bearer "+token)
+```
+    </CodeGroup>
+  </Expandable>
+  <Expandable title="Documents API" default-open="false">
+    Programmatically create, update, and manage individual documents within your projects.
+
+    <Steps>
+      <Step title="Retrieve Document" icon="download">
+        Use GET requests to fetch document content and metadata.
+      </Step>
+      <Step title="Update Content" icon="edit">
+        Send PATCH requests with updated content to modify documents.
+      </Step>
+      <Step title="Manage Versions" icon="git-branch">
+        Access version history and restore previous document states.
+      </Step>
+    </Steps>
+  </Expandable>
+  <Expandable title="Users API" default-open="false">
+    Manage user accounts, permissions, and team collaboration through the API.
+
+    <Expandable title="User Management Features" default-open="false">
+      - Invite new team members
+      - Update user roles and permissions
+      - Deactivate accounts
+      - Bulk user operations
+    </Expandable>
+  </Expandable>
+</ExpandableGroup>
+
+## Webhooks
+
+Webhooks allow you to receive real-time notifications about events in your Janm projects. Set up webhook endpoints to trigger actions in external systems when documentation changes occur.
+
+<Callout kind="tip">Webhooks are ideal for keeping external systems synchronized with your documentation updates.</Callout>
+
+<Steps>
+  <Step title="Create Webhook" icon="plus">
+    Define a webhook endpoint URL and select the events you want to monitor.
+  </Step>
+  <Step title="Configure Events" icon="settings">
+    Choose from events like document_created, document_updated, project_shared.
+  </Step>
+  <Step title="Handle Payloads" icon="database">
+    Process incoming webhook payloads to update external systems accordingly.
+  </Step>
+  <Step title="Security Validation" icon="shield">
+    Verify webhook signatures to ensure requests originate from Janm.
+  </Step>
+</Steps>
+
+| Event Type | Description | Use Case |
+|------------|-------------|----------|
+| document.created | Fired when a new document is created | Index in search engine |
+| document.updated | Triggered on document modifications | Send notifications |
+| project.shared | Occurs when project access is granted | Update permissions |
+| user.invited | Sent when new users are invited | Provision accounts |
+
+## Error Handling
+
+Proper error handling is crucial for robust API integrations. Janm provides detailed error responses to help you troubleshoot issues and handle edge cases gracefully.
+
+<ExpandableGroup>
+  <Expandable title="HTTP Status Codes" default-open="true">
+    Standard HTTP status codes indicate the result of your API requests. Common codes include 200 (success), 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), and 500 (server error).
+  </Expandable>
+  <Expandable title="Error Response Format" default-open="false">
+    All error responses follow a consistent JSON structure with error codes, messages, and optional details for debugging.
+
+    ```json
+    {
+      "error": {
+        "code": "VALIDATION_ERROR",
+        "message": "The provided data is invalid",
+        "details": [
+          {
+            "field": "name",
+            "message": "Name is required"
+          }
+        ]
+      }
+    }
+    ```
+  </Expandable>
+  <Expandable title="Rate Limiting" default-open="false">
+    When rate limits are exceeded, you'll receive a 429 status code with retry information in the response headers.
+  </Expandable>
+</ExpandableGroup>
+
+## SDKs and Libraries
+
+To simplify integration, we provide official SDKs and community-maintained libraries for popular programming languages.
+
+<Tabs>
+  <Tab title="JavaScript/Node.js" icon="code">
+    Official JavaScript SDK with TypeScript support for Node.js and browser environments.
+
+    ```javascript
+import { JanmAPI } from '@janm/sdk';
+
+const client = new JanmAPI({ apiKey: 'your-key' });
+const projects = await client.projects.list();
+```
+  </Tab>
+  <Tab title="Python" icon="terminal">
+    Python SDK with async support and comprehensive documentation.
+
+    ```python
+from janm_sdk import JanmAPI
+
+client = JanmAPI(api_key='your-key')
+projects = client.projects.list()
+```
+  </Tab>
+  <Tab title="Go" icon="cpu">
+    Go SDK optimized for performance and concurrency.
+
+    ```go
+package main
+
+import "github.com/janm/go-sdk"
+
+func main() {
+    client := janm.NewClient("your-key")
+    projects, _ := client.Projects.List()
+}
+```
+  </Tab>
+</Tabs>
+
+<Callout kind="info">Check our GitHub repository for the latest SDK versions and community contributions.</Callout>
+
+By leveraging the Janm API, you can build powerful integrations that extend the capabilities of our documentation platform and seamlessly connect it with your existing workflows and systems.

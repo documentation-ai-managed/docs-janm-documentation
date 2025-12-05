@@ -1,0 +1,270 @@
+---
+title: Advanced Usage
+description: Advanced features and techniques for power users of Janm Documentation
+---
+
+## Custom Workflows
+
+Advanced users can create sophisticated documentation workflows that automate repetitive tasks and ensure consistency across large documentation sets. Custom workflows combine API integrations, templates, and automation rules.
+
+<Columns cols={2}>
+  <Card title="Automation Rules" icon="zap" href="#automation">
+    Set up rules that automatically trigger actions based on document changes or events.
+  </Card>
+  <Card title="Template Engines" icon="file-text" href="#templates">
+    Build dynamic templates with conditional logic and data binding capabilities.
+  </Card>
+</Columns>
+
+## Advanced Search and Filtering
+
+Janm's powerful search capabilities allow you to find information quickly across large documentation repositories. Learn to use advanced operators and filters for precise results.
+
+<Tabs>
+  <Tab title="Search Operators" icon="search">
+    Use boolean operators, wildcards, and field-specific searches to narrow down results.
+
+    <CodeGroup tabs="Examples">
+      ```
+# Find documents with "API" AND "authentication"
+API AND authentication
+
+# Find documents with "REST" OR "GraphQL"
+REST OR GraphQL
+
+# Exclude documents containing "deprecated"
+-API deprecated
+
+# Search in specific fields
+title:"Getting Started" content:"configuration"
+```
+    </CodeGroup>
+  </Tab>
+  <Tab title="Filters" icon="filter">
+    Apply filters to search results based on metadata like author, date, project, and tags.
+
+    <Steps>
+      <Step title="Access Advanced Search" icon="settings">
+        Click the advanced search toggle in the search interface.
+      </Step>
+      <Step title="Select Filters" icon="list">
+        Choose from available filter options like date range, author, or project.
+      </Step>
+      <Step title="Combine with Query" icon="plus">
+        Use filters in combination with search terms for precise results.
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Saved Searches" icon="bookmark">
+    Save frequently used searches for quick access and share them with team members.
+
+    <Expandable title="Saved Search Features" default-open="false">
+      - Create named saved searches
+      - Share searches with team members
+      - Set up email notifications for search results
+      - Export search results to CSV
+    </Expandable>
+  </Tab>
+</Tabs>
+
+<Callout kind="tip">Mastering advanced search techniques can significantly improve your productivity when working with large documentation repositories.</Callout>
+
+## Bulk Operations
+
+Perform operations on multiple documents simultaneously to manage large documentation sets efficiently. Bulk operations save time and ensure consistency across your content.
+
+<ExpandableGroup>
+  <Expandable title="Bulk Editing" default-open="true">
+    Make changes to multiple documents at once, such as updating metadata, changing categories, or applying templates.
+
+    <Steps>
+      <Step title="Select Documents" icon="check-square">
+        Use checkboxes or search filters to select the documents you want to modify.
+      </Step>
+      <Step title="Choose Operation" icon="edit">
+        Select the bulk operation you want to perform from the available options.
+      </Step>
+      <Step title="Review Changes" icon="eye">
+        Preview the changes before applying them to ensure accuracy.
+      </Step>
+      <Step title="Apply Changes" icon="check">
+        Execute the bulk operation and monitor the progress.
+      </Step>
+    </Steps>
+  </Expandable>
+  <Expandable title="Bulk Import/Export" default-open="false">
+    Import large amounts of content from external sources or export documentation for backup and migration purposes.
+
+    <Expandable title="Supported Formats" default-open="false">
+      - Markdown files
+      - HTML pages
+      - Confluence exports
+      - GitBook projects
+      - Custom JSON formats
+    </Expandable>
+  </Expandable>
+  <Expandable title="Bulk Permissions" default-open="false">
+    Manage access permissions for multiple users or documents simultaneously to maintain security and compliance.
+  </Expandable>
+</ExpandableGroup>
+
+## Analytics and Reporting
+
+Gain insights into your documentation usage and effectiveness with comprehensive analytics and reporting features. Track engagement, identify gaps, and measure the impact of your documentation efforts.
+
+<Callout kind="info">Analytics help you understand which parts of your documentation are most valuable and where improvements are needed.</Callout>
+
+<Steps>
+  <Step title="Access Analytics" icon="bar-chart">
+    Navigate to the analytics section in your project dashboard.
+  </Step>
+  <Step title="Configure Reports" icon="settings">
+    Set up custom reports with specific metrics and date ranges.
+  </Step>
+  <Step title="View Insights" icon="eye">
+    Analyze trends, user engagement, and content performance.
+  </Step>
+  <Step title="Export Data" icon="download">
+    Export analytics data for further analysis or sharing.
+  </Step>
+</Steps>
+
+| Metric Type | Description | Use Case |
+|-------------|-------------|----------|
+| Page Views | Number of times documents are accessed | Identify popular content |
+| Search Queries | Terms users search for | Improve content discoverability |
+| Time on Page | Average time spent reading | Assess content engagement |
+| Conversion Rates | Actions taken after reading | Measure documentation effectiveness |
+
+## Custom Integrations
+
+Build custom integrations using Janm's webhook system and API to connect with proprietary systems or implement specialized workflows.
+
+<Tabs>
+  <Tab title="Webhook Handlers" icon="webhook">
+    Create custom webhook handlers to process events and trigger actions in your systems.
+
+    ```javascript
+app.post('/webhooks/janm', (req, res) => {
+  const { event, data } = req.body;
+  
+  switch (event) {
+    case 'document.updated':
+      // Update external system
+      updateExternalSystem(data.document);
+      break;
+    case 'project.created':
+      // Create corresponding project
+      createProjectMapping(data.project);
+      break;
+  }
+  
+  res.status(200).send('OK');
+});
+```
+  </Tab>
+  <Tab title="API Clients" icon="code">
+    Build custom API clients for languages not supported by official SDKs.
+
+    <CodeGroup tabs="Ruby,PHP">
+      ```ruby
+require 'net/http'
+require 'json'
+
+class JanmClient
+  def initialize(api_key)
+    @api_key = api_key
+    @base_url = 'https://api.janm.com/v1'
+  end
+  
+  def get_projects
+    uri = URI("#{@base_url}/projects")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    
+    request = Net::HTTP::Get.new(uri)
+    request['Authorization'] = "Bearer #{@api_key}"
+    
+    response = http.request(request)
+    JSON.parse(response.body)
+  end
+end
+```
+      ```php
+<?php
+
+class JanmClient {
+    private $apiKey;
+    private $baseUrl = 'https://api.janm.com/v1';
+    
+    public function __construct($apiKey) {
+        $this->apiKey = $apiKey;
+    }
+    
+    public function getProjects() {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->baseUrl . '/projects');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $this->apiKey
+        ]);
+        
+        $response = curl_exec($ch);
+        curl_close($ch);
+        
+        return json_decode($response, true);
+    }
+}
+?>
+```
+    </CodeGroup>
+  </Tab>
+  <Tab title="Middleware" icon="layers">
+    Implement middleware for authentication, logging, and request/response transformation.
+
+    <Expandable title="Middleware Examples" default-open="false">
+      - Authentication middleware for API requests
+      - Logging middleware for debugging
+      - Caching middleware for performance
+      - Transformation middleware for data formatting
+    </Expandable>
+  </Tab>
+</Tabs>
+
+## Performance Optimization
+
+Optimize your Janm Documentation setup for better performance, especially when dealing with large documentation repositories or high-traffic scenarios.
+
+<ExpandableGroup>
+  <Expandable title="Caching Strategies" default-open="true">
+    Implement intelligent caching to reduce load times and improve user experience.
+
+    <Steps>
+      <Step title="Enable CDN" icon="globe">
+        Use a Content Delivery Network to cache and serve static content globally.
+      </Step>
+      <Step title="Browser Caching" icon="hard-drive">
+        Configure appropriate cache headers for different content types.
+      </Step>
+      <Step title="API Response Caching" icon="database">
+        Cache API responses to reduce server load and improve response times.
+      </Step>
+    </Steps>
+  </Expandable>
+  <Expandable title="Database Optimization" default-open="false">
+    Optimize database queries and indexing for better performance with large datasets.
+
+    <Expandable title="Indexing Strategies" default-open="false">
+      - Full-text search indexing
+      - Metadata field indexing
+      - Relationship indexing for complex queries
+    </Expandable>
+  </Expandable>
+  <Expandable title="Content Optimization" default-open="false">
+    Optimize content delivery by compressing assets and lazy-loading images.
+  </Expandable>
+</ExpandableGroup>
+
+<Callout kind="danger">Always test performance optimizations in a staging environment before applying them to production systems.</Callout>
+
+By mastering these advanced features, you'll be able to leverage Janm Documentation to its full potential, creating efficient workflows and managing complex documentation ecosystems with ease.
